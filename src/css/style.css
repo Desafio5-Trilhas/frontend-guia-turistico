@@ -3,6 +3,7 @@
         --gray: #B9BBBE;
         --background-modal-color: #11191F;
         --black: #000000;
+        --background-footer-color: #232429;
     }
     body {
         color: var(--white) !important;
@@ -14,7 +15,10 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        gap: 20%;
+
+    }
+    main {
+        margin-top: 8%;
     }
     body:after {
         content: "";
@@ -108,4 +112,15 @@
         text-align: left;
         font-weight: 800;
         font-size: 12px;
+    }
+    
+    footer {
+        background-color: var(--background-footer-color);
+        text-align: center;
+        z-index: 2;
+        margin-top: 20px;
+        padding: 20px;
+    }
+    .names-dev {
+        color: var(--gray);
     }
