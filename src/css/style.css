@@ -4,6 +4,7 @@
         --background-modal-color: #11191F;
         --black: #000000;
         --background-footer-color: #232429;
+        --blue-background-button: #007BFF;
     }
     body {
         color: var(--white) !important;
@@ -15,11 +16,14 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-
     }
     main {
-        margin-top: 8%;
+        flex: 1;
     }
+    header {
+        margin-bottom: 5%;
+    }
+
     body:after {
         content: "";
         position: fixed;
@@ -70,7 +74,11 @@
     .section-card-carousel-search {
         height: 280px;
     }
-    .search-div {
+    .section-card-details-info {
+        height: 450px;
+        
+    }
+    .search-div, .details-div {
         display: flex;
         padding: 10px 30px;
         justify-content: space-between;
@@ -124,3 +132,103 @@
     .names-dev {
         color: var(--gray);
     }
+    #tour-details {
+        transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), top 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transform: translateY(0);
+        opacity: 1;
+        position: absolute;
+        background-color: var(--background-modal-color);
+        top: calc(8% + 60px);
+        width: 78%;
+        left: 130px;
+    }
+    #tour-details.raised {
+        transform: translateY(-30px); /* Ajuste a altura conforme necessário */
+        opacity: 1;
+    }
+    
+    #tour-details.closing {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    .title-details { 
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .title-images-details, .title-location-details {
+        font-size: 20px;
+        margin-left: 20px;
+        font-weight: bold;
+    }
+    .close-details {
+        display: flex;
+        gap: 10px;
+    }
+    .images-container {
+        margin-left: 20px;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+    }
+    .location-container {
+        margin-left: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .section-tour-details-body {
+        overflow-y: scroll;
+        max-height: 350px;
+        scrollbar-color: #B9BBBE #f1f1f1;
+    }
+    .title-secondary {
+        font-size: 16px;
+    }
+    #id-points-of-interest {
+        width: 60%;
+        padding: 12px 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+    
+    .title-mission-details {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .mission-daily-container {
+        display: flex;
+        margin-top: 20px;
+        flex-direction: column;
+    }
+    .mission-daily-details {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .mission-tip {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .title-tip {
+        padding: 10px;
+    }
+    button.submitButtonTipStyle {
+        width: 12%;
+        padding: 6px;
+        border: 1px solid var(--blue-background-button);
+        border-radius: 8px;
+        margin-left: 27%;
+        color: var(--white);
+        background-color: var(--blue-background-button);
+    }
+    /* @media only screen and (max-width: 780px) {
+        body {
+            gap: 10%;
+        }
+    } */

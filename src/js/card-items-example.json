@@ -1,0 +1,113 @@
+{
+    "card-item1": {
+        "cardItemName": "Parque nacional dos lençóis maranhenses",
+        "cardImagePrincipalSrc": "../assets/images/img1.jpg",
+		"cardImagesSecundary": [
+            "../assets/images/img1.jpg",
+            "../assets/images/img1.jpg",
+            "../assets/images/img1.jpg"
+        ],
+        "cardItemPointsOptions": [
+            "Parques",
+            "Atrações",
+            "Comidas e bebidas",
+            "Outro"
+        ],
+        "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
+        "existMissionDaily": true,
+        "missionsDailyTips": [
+            "E um parque muito famoso", 
+            "E uma atração famosa",
+            "E um restaurante conhecido"
+        ]
+    },
+    "card-item2": {
+        "cardItemName": "Parque nacional da chapada das mesas",
+        "cardImagePrincipalSrc": "../assets/images/img2.jpg",
+		"cardImagesSecundary": [
+            "../assets/images/img2.jpg",
+            "../assets/images/img2.jpg",
+            "../assets/images/img2.jpg"
+        ],
+       "cardItemPointsOptions": [
+            "Parques",
+            "Atrações",
+            "Comidas e bebidas",
+            "Outro"
+        ],
+        "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
+        "existMissionDaily": true,
+        "missionsDailyTips": [
+            "E um parque muito famoso", 
+            "E uma atração famosa",
+            "E um restaurante conhecido"
+        ]
+    },
+    "card-item3": {
+        "cardItemName": "Delta do parnaiba",
+        "cardImagePrincipalSrc": "../assets/images/img3.jpg",
+		"cardImagesSecundary": [
+            "../assets/images/img3.jpg",
+            "../assets/images/img3.jpg",
+            "../assets/images/img3.jpg"
+        ],
+       "cardItemPointsOptions": [
+            "Parques",
+            "Atrações",
+            "Comidas e bebidas",
+            "Outro"
+        ],
+        "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
+        "existMissionDaily": false,
+        "missionsDailyTips": [
+            "E um parque muito famoso", 
+            "E uma atração famosa",
+            "E um restaurante conhecido"
+        ]
+    },
+    "card-item4": {
+        "cardItemName": "Cidade de alcantara",
+        "cardImagePrincipalSrc": "../assets/images/img4.jpg",
+		"cardImagesSecundary": [
+            "../assets/images/img4.jpg",
+            "../assets/images/img4.jpg",
+            "../assets/images/img4.jpg"
+        ],
+        "cardItemPointsOptions": [
+            "Parques",
+            "Atrações",
+            "Comidas e bebidas",
+            "Outro"
+        ],
+        "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
+        "existMissionDaily": false,
+        "missionsDailyTips": [
+            "E um parque muito famoso", 
+            "E uma atração famosa",
+            "E um restaurante conhecido"
+        ]
+    },
+    "card-item5": {
+        "cardItemName": "Lagoa do Cassó",
+        "cardImagePrincipalSrc": "../assets/images/img4.jpg",
+		"cardImagesSecundary": [
+            "../assets/images/img4.jpg",
+            "../assets/images/img4.jpg",
+            "../assets/images/img4.jpg"
+        ],
+       "cardItemPointsOptions": [
+            "Parques",
+            "Atrações",
+            "Comidas e bebidas",
+            "Outro"
+        ],
+        "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
+        "existMissionDaily": true,
+        "missionsDailyTips": [
+            "E um parque muito famoso", 
+            "E uma atração famosa",
+            "E um restaurante conhecido"
+        ]
+    }
+    
+}
