@@ -16,9 +16,9 @@
         "cardItemImageGoogleMapsSrc": "../assets/images/image-maps01.png",
         "existMissionDaily": true,
         "missionsDailyTips": [
-            "E um parque muito famoso", 
-            "E uma atração famosa",
-            "E um restaurante conhecido"
+            "testando dica 1", 
+            "testando dica 1",
+            "testando dica 1"
         ]
     },
     "card-item2": {

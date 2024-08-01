@@ -37,9 +37,15 @@
     <section class="section-element">
       <div class="section-card-carousel-search" id="carousel">
           <div class="search-div">
-            <div style="width: 90%;">
+            <div style="width: 90%; display: flex;
+            align-items: center;">
               <span class="title-search">Destinos populares</span>
-              <input type="text" placeholder="Digite um ponto turistico">
+              <input type="text" id="searchDestineValue" placeholder="Digite um ponto turistico">
+              <button id="searchDestineButton" onclick="searchDestineConsult()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="15" width="15" viewBox="0 0 512 512">
+                  <path fill="#ffffff" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+                </svg>
+              </button>
             </div>
 
             <div class="next-and-past-buttons">
@@ -159,7 +165,7 @@
             setTimeout(function() {
                 tourDetails.classList.toggle('raised');
             }, 10); 
-            console.log(item)
+            // console.log(item)
             fetchInfoDetails(item)
         });
     });
@@ -222,17 +228,24 @@
       if(existMissionDaily == true) {
         let select = document.getElementById('id-points-of-interest')
         let optionHtml = "";
-
+        let cont = 5;
         itemCard.missionsDailyTips.forEach((item, index) => {
           htmlMission += `
             <div class="mission-tip">
-              <span class="title-tip">${item}?</span>
-              <input type="text" style="width: 45%;">
+              <span class="title-tip" id="mission-${index}">${item}?</span>
+              <div id="tip-answer-${cont++}" style="position: relative; width: 45%">
+                <input type="text">
+                <span class="error-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+                    <path fill="#dc3545" d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zm-248 50c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z"/>
+                  </svg>
+                </span>
+              </div>
             </div>
           `;
         });
         htmlMission += `
-          <button class="submitButtonTipStyle" onclick="">
+          <button class="submitButtonTipStyle" onclick="submitMissionDaily(${3});">
             Salvar
           </button>
 
@@ -257,6 +270,119 @@
 
     }
 
+    function submitMissionDaily(travelId) {
+      let missionDailyAnswers = [];
+
+      const url = 'https://api-guia-turistico.vercel.app/api/missao/valida-missao'
+      const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
+      
+      let missionsTips = document.querySelectorAll('.title-tip')
+      let answers = document.querySelectorAll('.mission-tip input')
+      let useID = 2;
+
+      let cont = 5
+      missionsTips.forEach((missionTip, index) => {
+        answer = {
+          "id_missao": cont++,
+          "id_usuario": useID,
+          "id_destino": travelId,
+          "ultima_dica": missionTip.textContent,
+          "resposta": answers[index].value
+        }
+        missionDailyAnswers.push(answer)
+      })
+      
+      // const questions = [
+      //   {
+      //       "id_missao": 5,
+      //       "id_usuario": 2,
+      //       "id_destino": 3,
+      //       "ultima_dica": "testando dica 1",
+      //       "resposta": "missão de teste 1"
+      //   },
+      //   {
+      //       "id_missao": 6,
+      //       "id_usuario": 2,
+      //       "id_destino": 3,
+      //       "ultima_dica": "testando dica 1",
+      //       "resposta": "missão de teste 2"
+      //   },
+      //   {
+      //     "id_missao": 7,
+      //     "id_usuario": 2,
+      //     "id_destino": 3,
+      //     "ultima_dica": "testando dica 1",
+      //     "resposta": "missão de teste 3"
+      //   }
+      // ];
+
+      console.log(missionDailyAnswers)
+
+      fetch(url, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey
+        },
+        body: JSON.stringify(missionDailyAnswers)
+      }) 
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          // console.log('Resposta da API:', data);
+          // console.log(data.result.id)
+          let missionsDailyIds = Array.from(missionsTips).map(missionTip => missionTip.id.replace('mission-', ''));
+          missionsDailyIds = [5,6,7]
+
+          // console.log(missionsDailyIds)
+          try {
+            for(item of missionsDailyIds) {
+              document.querySelector(`#tip-answer-${item} input`).classList.remove('form-error')
+              document.querySelector(`#tip-answer-${item} .error-icon`).style.display = 'none'
+            }
+          }catch {}
+ 
+          if(data.result.message == 'Sucesso') {
+            console.log('Sucesso')
+            let missionContainer = document.querySelector('.mission-daily-container')
+            
+            htmlMission = `
+              <span class="title-secondary" id="mission-daily-title">
+                Você ja concluiu todas as missões de hoje.
+              </span>
+              <div>
+                <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
+              </div>
+            `
+            missionContainer.innerHTML = htmlMission;
+
+          }else {
+            // todos errados   
+            if(data.result.id.length == 0){
+              for(item of missionsDailyIds) {
+                document.querySelector(`#tip-answer-${item} input`).classList.add('form-error')
+                document.querySelector(`#tip-answer-${item} .error-icon`).style.display = 'flex'
+              }
+            }else{
+              for(item of missionsDailyIds) {
+                if(!data.result.id.includes(item)) {
+                  document.querySelector(`#tip-answer-${item} input`).classList.add('form-error')
+                  document.querySelector(`#tip-answer-${item} .error-icon`).style.display = 'flex'
+                }
+              }
+              // console.log('nem todos estão errados')
+            }
+          }
+      })
+      .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+      });
+    }
+
     function closeInfoDetails(el) {
       var tourDetails = document.getElementById('tour-details');
       
@@ -268,6 +394,42 @@
           tourDetails.classList.remove('closing');
           carousel.style.display = '';
       }, 500); 
+    }
+
+    document.getElementById('searchDestineValue').addEventListener('keypress', function(event) {
+      if(event.key === 'Enter') {
+        event.preventDefault();
+        searchDestineConsult()
+      }
+    })
+
+    function searchDestineConsult() {
+      let valueText = document.getElementById('searchDestineValue').value
+      console.log(valueText)
+      const url = 'https://api-guia-turistico.vercel.app/api/destino/pesquisa/'+valueText;
+      const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
+      const options = {
+          method: 'GET', 
+          headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': apiKey
+          }
+      };
+
+      fetch(url, options) 
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+          console.log("Return: ", data)
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
     }
 
 </script>

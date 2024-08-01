@@ -219,6 +219,7 @@
         padding: 10px;
     }
     button.submitButtonTipStyle {
+        cursor: pointer;
         width: 12%;
         padding: 6px;
         border: 1px solid var(--blue-background-button);
@@ -226,6 +227,26 @@
         margin-left: 27%;
         color: var(--white);
         background-color: var(--blue-background-button);
+    }
+    button#searchDestineButton {
+        cursor: pointer;
+        padding: 11px;
+        margin-left: 10px;
+        border: 1px solid var(--blue-background-button);
+        border-radius: 8px;
+        color: var(--white);
+        background-color: var(--blue-background-button);
+    }
+    .form-error {
+        border-color: #dc3545 !important;
+        background-color: #f8d7da;
+    }
+    .error-icon {
+        position: absolute;
+        top: 50%;
+        right: 22%;
+        transform: translateY(-50%);
+        display: none;
     }
     /* @media only screen and (max-width: 780px) {
         body {
