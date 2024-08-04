@@ -97,8 +97,12 @@ function fetchInfoBackend(destineID) {
 // });
 
   async function initMap(itemData) {
+      const latitude = -2.5307;
+      const longitude = -44.2989;
+      const type = 'Museu';
+
       var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
-          center: {lat: -34.397, lng: 150.644},
+          center: {lat: latitude, lng: longitude},
           zoom: 8
       });
 
@@ -106,7 +110,7 @@ function fetchInfoBackend(destineID) {
       service.nearbySearch({
           location: {lat: -34.397, lng: 150.644},
           radius: 500,
-          type: ['store']
+          type: [type]
       }, function(results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
               for (var i = 0; i < results.length; i++) {
