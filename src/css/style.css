@@ -541,6 +541,11 @@
         color: var(--white);
         font-weight: bold;
     }
+    .image-google-maps {
+        width: auto;
+        height: 600px;
+        position: relative;
+    }
 
     /* @media only screen and (max-width: 780px) {
         body {
