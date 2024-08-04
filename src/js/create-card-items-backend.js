@@ -86,7 +86,7 @@ function fetchInfoBackend(destineID) {
       // const latitude = -2.5307;
       // const longitude = -44.2989;
       // const type = 'Museu';
-
+      console.log(latitude, longitude, type)
       var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
           center: {lat: latitude, lng: longitude},
           zoom: 8
