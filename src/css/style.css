@@ -273,8 +273,7 @@
         transform: translateY(-50%);
         display: none;
     }
-   
-    #errorMsg {
+    .error-style {
         font-family: sans-serif;
         color: #dc3545;
         font-weight: bold;
@@ -419,13 +418,9 @@
         font-weight: bold;
         padding: 15px;
     }
-    #email-container {
+    .input-container-login, .input-container-signup {
         position: relative; 
         width:75%;
-    }
-    #password-container {
-        position: relative; 
-        width:75%
     }
 
     /* table styles */
