@@ -87,8 +87,8 @@ function fetchHistoricTable() {
                 data.forEach((item, index) => {
                     html += `<tr>
                                 <td>${index}</td>
-                                <td>${item.data_acesso}</td>
-                                <td>${item.destinos.titulo}</td>
+                                <td>${getDataFormatedToShow(item.data_acesso)}</td>
+                                <td>${item.destino.titulo}</td>
                              </tr>`
                 });
                 tbodyContainer.innerHTML = html
