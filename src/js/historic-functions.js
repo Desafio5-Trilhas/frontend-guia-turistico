@@ -31,9 +31,6 @@ function getDataAndHourFormated(){
     return String(formattedDate)
 }
 function createHistoricBackend(item) {
-    console.log(item)
-    console.log('criando historico')
-
     const url = 'https://api-guia-turistico.vercel.app/api/acesso-historico';
     const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
     
@@ -56,7 +53,7 @@ function createHistoricBackend(item) {
             return response.json();
         })
         .then(data => {
-            console.log(data)
+            // console.log(data)
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);

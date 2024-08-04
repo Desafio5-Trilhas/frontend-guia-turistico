@@ -107,7 +107,7 @@ function fetchInfoDetails(item) {
         select.innerHTML = optionHtml
 
         document.querySelector('.image-google-maps').innerHTML = `
-            <img src="../assets/images/image-maps01.png" width="auto" height="600" alt="">      
+            <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
         `
 
         checkMissionDaily(data)
@@ -128,7 +128,7 @@ function checkMissionDaily(itemData){
           cadastrados no sistema.
         </span>
         <div>
-          <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
+          <img src="./assets/images/image-default-mission01.png" width="150" height="150"alt="">
         </div>
       `
       missionContainer.innerHTML = htmlMission;
@@ -168,7 +168,7 @@ function checkMissionDaily(itemData){
           Você ja concluiu todas as missões de hoje.
         </span>
         <div>
-          <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
+          <img src="./assets/images/image-default-mission01.png" width="150" height="150"alt="">
         </div>
       `
       missionContainer.innerHTML = htmlMission;

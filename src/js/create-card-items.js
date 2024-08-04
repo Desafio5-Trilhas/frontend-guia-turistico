@@ -20,11 +20,9 @@
   function createCardItems() {
     let html = "";
     fetchItemsDefault().then(data => {
-    //   console.log('jsonData:', jsonData); 
       let carouselContainer = document.querySelector('.swiper-wrapper')
       // Convert the object values to an array
       const items = Object.values(jsonData);
-    //   console.log(items);
       items.forEach((item,  index) => {
           html += `<div class="swiper-slide" id="card-item-${index}">
               <img src="${item.cardImagePrincipalSrc}" width="150" height="180" alt="">

@@ -60,16 +60,14 @@ function fetchMissionConcludedModal() {
         })
         .then(data => {
             let html = "";
-            console.log(data, 'here123')
-            getDataFormatedToShow(data[0].data_finalizacao)
             document.querySelector('.modal-form-imgs').innerHTML = ''
             let missionConcludedContainer = document.querySelector('.modal-form-imgs')
 
             if(data.length > 0) {                
-                data.forEach((item) => {
+                data.forEach((item, index) => {
                     html += `<div class="img-mission-icon">
                         <div>
-                            <img src="../assets/images/image-points.png" width="100px" height="100px" alt="">
+                            <img src="./assets/images/image-points.png" width="100px" height="100px" alt="">
                         </div>            
                         <div class="title-mission-img">${item.ultima_dica}</div>
                         <div class="data-mission-img"> ${getDataFormatedToShow(item.data_finalizacao)}</div>
