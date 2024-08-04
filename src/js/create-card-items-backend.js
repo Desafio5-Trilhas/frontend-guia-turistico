@@ -81,6 +81,49 @@ function fetchInfoBackend(destineID) {
             console.error('There has been a problem with your fetch operation:', error);
         });
 }
+
+async function initMap(itemData) {
+  // console.log(itemData.rotas[0])
+
+  // // const latitude = itemData.rotas[0].latitude
+  // // const longitude = itemData.rotas[0].longitude
+  // const latitude = 2.5307
+  // const longitude = 44.2989
+  
+  // const type = itemData.rotas[0].tipo;
+  // console.log(latitude, longitude, type)
+  // var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
+  //     center: {lat: -34.397, lng: 150.644},
+  //     zoom: 8
+  // });
+
+  var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+});
+
+var service = new google.maps.places.PlacesService(map);
+service.nearbySearch({
+    location: {lat: -34.397, lng: 150.644},
+    radius: 500,
+    type: ['store']
+}, function(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+        }
+    }
+});
+function createMarker(place) {
+  var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location
+  });
+  }
+}
+
+
+
 function fetchInfoDetails(item) {
     let html = "";
     let destineID = item.id.replace('card-item-', '')
@@ -106,9 +149,10 @@ function fetchInfoDetails(item) {
         });
         select.innerHTML = optionHtml
 
-        document.querySelector('.image-google-maps').innerHTML = `
-            <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
-        `
+        initMap(data)
+        // document.querySelector('.image-google-maps').innerHTML = `
+        //     <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
+        // `
 
         checkMissionDaily(data)
 
