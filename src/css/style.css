@@ -247,7 +247,10 @@
     }
     .form-error {
         border-color: #dc3545 !important;
-        background-color: #f8d7da;
+        background-color: #f8d7da !important;
+    }
+    .form-save {
+        border-color: #198754 !important;
     }
     .error-icon {
         position: absolute;
@@ -255,6 +258,26 @@
         right: 22%;
         transform: translateY(-50%);
         display: none;
+    }
+    .error-icon-login {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
+        display: none;
+    }
+    .save-icon-login {
+        position: absolute;
+        top: 62%;
+        right: 5%;
+        transform: translateY(-50%);
+        display: none;
+    }
+   
+    #errorMsg {
+        font-family: sans-serif;
+        color: #dc3545;
+        font-weight: bold;
     }
 
     /* modal styles */
@@ -280,17 +303,17 @@
     }
     
     .modal-content {
-        background-color: #fefefe;
+        background-color: var(--background-modal-color);
         margin: 5% auto; /* 5% from the top and centered */
         padding: 20px;
-        border: 1px solid #888;
+        border: 1px solid var(--background-modal-color);
         width: 30%; /* Could be more or less, depending on screen size */
         animation: slide-down 0.3s ease;
         border-radius: 12px;
     }
     .modal-title {
         font-size: 32px;
-        color: var(--black);
+        color: var(--white);
         font-weight: 600;
         padding: 20px;
         display: flex;
@@ -310,9 +333,14 @@
         position: relative;
         gap: 10px;
     }
+    .modal-form-imgs {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
     .input-title {
         position: absolute;
-        color: var(--black);
+        color: var(--gray);
         font-weight: bold;
         outline: none;
         padding: 15px;
@@ -321,15 +349,23 @@
     .input-title.focused {
         font-size: 12px;
         position: relative;
-        color: var(--black);
+        color: var(--white);
         font-weight: bold;
-        background-color: #ffffff;
+        background-color: var(--background-modal-color);
         outline: none;
-        padding: 5px;
+        padding: 1px;
         margin-left: 5px;
     }
     
     .modal-content.slide-down-exit {
+        animation: slide-up 0.3s ease;
+    }
+
+    .modal-content-historic.slide-down-exit {
+        animation: slide-up 0.3s ease;
+    }
+
+    .modal-content-mission.slide-down-exit {
         animation: slide-up 0.3s ease;
     }
     
@@ -344,7 +380,7 @@
     }
     
     .close {
-        color: var(--black);
+        color: var(--white);
         float: right;
         font-size: 40px;
         margin-top: -18px;
@@ -353,7 +389,7 @@
     
     .close:hover,
     .close:focus {
-        color: black;
+        color: var(--blue-background-button);
         text-decoration: none;
         cursor: pointer;
     }
@@ -362,14 +398,149 @@
         padding: 12px 20px;
         width: 75%;
         display: inline-block;
-        border: 1px solid #ccc;
+        border: 1px solid var(--blue-background-button);
         border-radius: 8px;
+        background-color: var(--blue-background-button);
+        cursor: pointer;
+        color: var(--white);
     }
     .signup-link {
-        color: var(--black);
+        color: var(--white);
         text-align: center;
         padding-top: 18px;
         font-size: 15px;
+    }
+    .signup-link a:hover {
+        color: var(--blue-background-button);
+    }
+
+    .title-historic {
+        color: var(--black);
+        font-weight: bold;
+        padding: 15px;
+    }
+    #email-container {
+        position: relative; 
+        width:75%;
+    }
+    #password-container {
+        position: relative; 
+        width:75%
+    }
+
+    /* table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+        color: var(--black);
+
+    }
+    
+    /* Estilo para a linha de cabeçalho */
+    table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+    }
+    
+    /* Estilo para as células do cabeçalho */
+    table th,
+    table td {
+        padding: 12px 15px;
+    }
+    
+    /* Estilo para as linhas ímpares */
+    table tbody tr:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+    
+    /* Estilo para as linhas pares */
+    table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    
+    /* Estilo ao passar o mouse sobre as linhas */
+    table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    /* Estilo para bordas */
+    table th,
+    table td {
+        border: 1px solid #dddddd;
+    }
+    
+    /* Estilo para células numéricas */
+    table td.num {
+        text-align: right;
+    }
+    
+    /* Estilo para células de destaque */
+    table td.highlight {
+        font-weight: bold;
+        color: #009879;
+    }
+    
+
+    .table-container {
+        flex-grow: 1;
+        max-height: 199px;
+        overflow-x: auto;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    button#searchHistoric {
+        cursor: pointer;
+        padding: 9px;
+        margin-left: 10px;
+        border: 1px solid var(--blue-background-button);
+        border-radius: 8px;
+        color: var(--white);
+        background-color: var(--blue-background-button);
+    }
+    .modal-historic-search {
+        display: flex;
+        align-items: center;
+        width: 98%;
+    }
+    .modal-content-historic {
+        background-color: var(--background-modal-color);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid var(--background-modal-color);
+        width: 42%;
+        animation: slide-down 0.3s ease;
+        border-radius: 12px;
+    }
+    .modal-content-mission {
+        background-color: var(--background-modal-color);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid var(--background-modal-color);
+        width: 80%;
+        animation: slide-down 0.3s ease;
+        border-radius: 12px;
+        color: var(--black);
+    }
+
+    .img-mission-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--black);
+        font-family: sans-serif;
+    }
+    .title-mission-img {
+        font-weight: bold;
+        color: var(--blue-background-button);
+    }
+    .data-mission-img {
+        font-size: 12px;
     }
 
     /* @media only screen and (max-width: 780px) {

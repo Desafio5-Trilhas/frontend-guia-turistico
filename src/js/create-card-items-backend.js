@@ -27,20 +27,39 @@ function fetchItemsIndexDefault() {
         });
 }
 
+function toBase64(arr) {
+    //arr = new Uint8Array(arr) if it's an ArrayBuffer
+    return btoa(
+       arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
+ }
+
 function processImage(image) {
-    console.log(image)
-    // Converte o array de bytes em um Uint8Array
-    const byteArray = new Uint8Array(image.data);
+    const blob = new Blob([image.data], { type: 'image/jpeg' });
 
-    // Cria um Blob a partir do Uint8Array
-    const blob = new Blob([byteArray], { type: 'image/jpeg' }); // ou 'image/png' dependendo do tipo de imagem
-
-    // Cria uma URL para o Blob
+    // Cria um objeto URL a partir do Blob
     const imageUrl = URL.createObjectURL(blob);
-
-    // Define o src do elemento img para a URL do Blob
+    const img = new Image();
+    img.src = imageUrl;
     console.log(imageUrl)
-    return imageUrl;
+    img.onload = function() {
+        // Cria um elemento canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Desenha a imagem no canvas
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        // Converte o canvas em uma data URL
+        const dataUrl = canvas.toDataURL('image/jpg');
+        
+        // Cria uma nova imagem com a data URL
+        const newImg = document.createElement('img');
+        newImg.src = dataUrl;
+        console.log(newImg);
+    };
                    
 }
 
@@ -50,7 +69,10 @@ function createCardItems() {
   fetchItemsIndexDefault().then(data => {
     console.log(data)
     const items = Object.values(data);
-    console.log(items[0])
+    console.log(items[0].imagems[2])
+    processImage(items[0].imagems[2].imagem)
+
+    return 
 
     // construct items carrousel
     let carouselContainer = document.querySelector('.swiper-wrapper')
