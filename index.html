@@ -486,7 +486,7 @@
               }
             }else{
               for(item of missionsDailyIds) {
-                if(!data.result.id.includes(item)) {
+                if(!data.result.id.includes(Number(item))) {
                   document.querySelector(`#tip-answer-${item} input`).classList.add('form-error')
                   document.querySelector(`#tip-answer-${item} .error-icon`).style.display = 'flex'
                 }
