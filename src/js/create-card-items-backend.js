@@ -82,41 +82,49 @@ function fetchInfoBackend(destineID) {
         });
 }
 
-  async function initMap(lat, long, type) {
-      // const latitude = -2.5307;
-      // const longitude = -44.2989;
-      // const type = 'Museu';
-      console.log(lat, long, type)
-      console.log(typeof  lat, typeof  long, typeof  type)
-      const latitude = parseFloat(lat).toFixed(6)
-      const longitude = parseFloat(long).toFixed(6)
-      console.log(lat, long, type)
-      
-      var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
-          center: {lat: latitude, lng: longitude},
-          zoom: 8
-      });
+async function initMap(lat, long, type) {
+  // Imprime os valores iniciais e seus tipos
+  console.log(lat, long, type);
+  console.log(typeof lat, typeof long, typeof type);
 
-      var service = new google.maps.places.PlacesService(map);
-      service.nearbySearch({
-          location: {lat: latitude, lng: longitude},
-          radius: 500,
-          type: [type]
-      }, function(results, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-              for (var i = 0; i < results.length; i++) {
-                  createMarker(results[i]);
-              }
+  // Converte lat e long para float e formata para 6 casas decimais
+  const latitude = parseFloat(lat).toFixed(6);
+  const longitude = parseFloat(long).toFixed(6);
+
+  // Converte latitude e longitude de volta para número
+  const latNum = parseFloat(latitude);
+  const longNum = parseFloat(longitude);
+
+  console.log(latNum, longNum, type);
+
+  // Inicializa o mapa
+  var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
+      center: {lat: latNum, lng: longNum},
+      zoom: 8
+  });
+
+  // Configura o serviço de pesquisa de lugares
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch({
+      location: {lat: latNum, lng: longNum},
+      radius: 500,
+      type: [type]
+  }, function(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
           }
-      });
-
-      function createMarker(place) {
-          var marker = new google.maps.Marker({
-              map: map,
-              position: place.geometry.location
-          });
       }
+  });
+
+  // Função para criar um marcador no mapa
+  function createMarker(place) {
+      var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+      });
   }
+}
 
 
 
