@@ -88,6 +88,10 @@ function fetchInfoBackend(destineID) {
       // const type = 'Museu';
       console.log(latitude, longitude, type)
       console.log(typeof  latitude, typeof  longitude, typeof  type)
+      const latitude = parseFloat(latitude).toFixed(6)
+      const longitude = parseFloat(longitude).toFixed(6)
+      console.log(latitude, longitude, type)
+      
       var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
           center: {lat: latitude, lng: longitude},
           zoom: 8
@@ -143,7 +147,7 @@ function fetchInfoDetails(item) {
         select.innerHTML = optionHtml
         
 
-        initMap(parseFloat(data.rotas[0].latitude), parseFloat(data.rotas[0].longitude), data.rotas[0].tipo )
+        initMap(data.rotas[0].latitude, data.rotas[0].longitude, data.rotas[0].tipo )
         // document.querySelector('.image-google-maps').innerHTML = `
         //     <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
         // `
@@ -160,7 +164,7 @@ document.getElementById('id-points-of-interest').addEventListener('change', func
   const latitude = selectedOption.dataset.latitude; 
   const longitude = selectedOption.dataset.longitude; 
   const tipo = selectedOption.dataset.tipo; 
-  initMap(parseFloat(latitude), parseFloat(longitude), tipo )
+  initMap(latitude, longitude, tipo )
 })
 
 async function getMissionConcluded() {
