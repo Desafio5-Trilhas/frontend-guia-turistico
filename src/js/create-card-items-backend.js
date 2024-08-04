@@ -82,24 +82,10 @@ function fetchInfoBackend(destineID) {
         });
 }
 
-// console.log(itemData.rotas[0])
-
-// // const latitude = itemData.rotas[0].latitude
-// // const longitude = itemData.rotas[0].longitude
-// const latitude = 2.5307
-// const longitude = 44.2989
-
-// const type = itemData.rotas[0].tipo;
-// console.log(latitude, longitude, type)
-// var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
-//     center: {lat: -34.397, lng: 150.644},
-//     zoom: 8
-// });
-
-  async function initMap(itemData) {
-      const latitude = -2.5307;
-      const longitude = -44.2989;
-      const type = 'Museu';
+  async function initMap(latitude, longitude, type) {
+      // const latitude = -2.5307;
+      // const longitude = -44.2989;
+      // const type = 'Museu';
 
       var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
           center: {lat: latitude, lng: longitude},
@@ -108,7 +94,7 @@ function fetchInfoBackend(destineID) {
 
       var service = new google.maps.places.PlacesService(map);
       service.nearbySearch({
-          location: {lat: -34.397, lng: 150.644},
+          location: {lat: latitude, lng: longitude},
           radius: 500,
           type: [type]
       }, function(results, status) {
@@ -150,11 +136,12 @@ function fetchInfoDetails(item) {
         let optionHtml = "";
 
         data.rotas.forEach((item) => {
-            optionHtml += `<option value="${item.id_rota}" data-latitude="${item.latitude}" data-longitude="${item.longitude}">${item.nome}</option>`;
+            optionHtml += `<option value="${item.id_rota}" data-tipo=${item.tipo} data-latitude="${item.latitude}" data-longitude="${item.longitude}">${item.nome}</option>`;
         });
         select.innerHTML = optionHtml
+        
 
-        initMap(data)
+        initMap(data.rotas[0].latitude, data.rotas[0].longitude, data.rotas[0].tipo )
         // document.querySelector('.image-google-maps').innerHTML = `
         //     <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
         // `
@@ -165,6 +152,14 @@ function fetchInfoDetails(item) {
     
 
 }
+
+document.getElementById('id-points-of-interest').addEventListener('change', function(e) {
+  const selectedOption = e.target.options[e.target.selectedIndex];
+  const latitude = selectedOption.dataset.latitude; 
+  const longitude = selectedOption.dataset.longitude; 
+  const tipo = selectedOption.dataset.tipo; 
+  initMap(latitude, longitude, tipo )
+})
 
 async function getMissionConcluded() {
     const url = 'https://api-guia-turistico.vercel.app/api/missao-concluida/';
