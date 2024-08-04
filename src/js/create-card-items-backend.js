@@ -117,7 +117,29 @@ function fetchInfoDetails(item) {
 
 }
 
-function checkMissionDaily(itemData){
+async function getMissionConcluded() {
+    const url = 'https://api-guia-turistico.vercel.app/api/missao-concluida/';
+    const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
+    
+    try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+  }
+}
+async function checkMissionDaily(itemData){
     let htmlMission = "";
     let missionContainer = document.querySelector('.mission-daily-container')
     
@@ -135,8 +157,20 @@ function checkMissionDaily(itemData){
 
       return 
     }
+    
+    let missionConcluded = await getMissionConcluded()
+    if(missionConcluded.length > 0) {
+      // Função para remover elementos do arrayA se id_missao existir em arrayB
+      function removeIfExists(itemDatas, missionConcluded) {
+        return itemDatas.filter(itemA => {
+            return !missionConcluded.some(itemB => itemA.id_missao === itemB.id_missao);
+        });
+      }
 
-    if(itemData.missaos) {
+      itemData.missaos = removeIfExists(itemData.missaos, missionConcluded);
+    }
+
+    if(itemData.missaos.length > 0) {
 
       itemData.missaos.forEach((item) => {
         htmlMission += `
@@ -165,7 +199,7 @@ function checkMissionDaily(itemData){
     }else {
       htmlMission = `
         <span class="title-secondary" id="mission-daily-title">
-          Você ja concluiu todas as missões de hoje.
+          Você ja concluiu todas as missões deste destino.
         </span>
         <div>
           <img src="./assets/images/image-default-mission01.png" width="150" height="150"alt="">
