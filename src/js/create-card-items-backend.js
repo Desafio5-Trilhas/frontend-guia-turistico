@@ -146,12 +146,12 @@ function fetchInfoDetails(item) {
         let optionHtml = "";
 
         data.rotas.forEach((item) => {
-            optionHtml += `<option value="${item.id_rota}" data-tipo=${item.tipo} data-latitude="${item.latitude}" data-longitude="${item.longitude}">${item.nome}</option>`;
+            optionHtml += `<option value="${item.id_rota}" data-nome=${item.nome} data-latitude="${item.latitude}" data-longitude="${item.longitude}">${item.nome}</option>`;
         });
         select.innerHTML = optionHtml
         
 
-        initMap(data.rotas[0].latitude, data.rotas[0].longitude, data.rotas[0].tipo )
+        initMap(data.rotas[0].latitude, data.rotas[0].longitude, data.rotas[0].nome )
         // document.querySelector('.image-google-maps').innerHTML = `
         //     <img src="./assets/images/image-maps01.png" width="auto" height="600" alt="">      
         // `
@@ -167,8 +167,8 @@ document.getElementById('id-points-of-interest').addEventListener('change', func
   const selectedOption = e.target.options[e.target.selectedIndex];
   const latitude = selectedOption.dataset.latitude; 
   const longitude = selectedOption.dataset.longitude; 
-  const tipo = selectedOption.dataset.tipo; 
-  initMap(latitude, longitude, tipo )
+  const nome = selectedOption.dataset.nome; 
+  initMap(latitude, longitude, nome )
 })
 
 async function getMissionConcluded() {
@@ -226,20 +226,23 @@ async function checkMissionDaily(itemData){
 
     if(itemData.missaos.length > 0) {
 
-      itemData.missaos.forEach((item) => {
-        htmlMission += `
-          <div class="mission-tip">
-            <span class="title-tip" id="mission-${item.id_missao}">${item.dica1}?</span>
-            <div id="tip-answer-${item.id_destino}" style="position: relative; width: 45%">
-              <input type="text" class="input-style-1">
-              <span class="error-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
-                  <path fill="#dc3545" d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zm-248 50c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z"/>
-                </svg>
-              </span>
+      itemData.missaos.forEach((item, index) => {
+        if(index <= 2) {
+          htmlMission += `
+            <div class="mission-tip">
+              <span class="title-tip" id="mission-${item.id_missao}">${item.dica1}?</span>
+              <div id="tip-answer-${item.id_missao}" style="position: relative; width: 45%">
+                <input type="text" class="input-style-1">
+                <span class="error-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+                    <path fill="#dc3545" d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zm-248 50c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z"/>
+                  </svg>
+                </span>
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        }
+
       });
       htmlMission += `
         <button class="submitButtonTipStyle" onclick="submitMissionDaily(${itemData.missaos[0].id_destino});">

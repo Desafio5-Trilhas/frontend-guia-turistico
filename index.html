@@ -422,7 +422,7 @@
     function submitMissionDaily(travelId) {
       let missionDailyAnswers = [];
 
-      const url = 'https://api-guia-turistico.vercel.app/api/missao/valida-missao'
+      const url = 'http://localhost:3000/api/missao/valida-missao'
       const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
       
       let missionsTips = document.querySelectorAll('.title-tip')
@@ -454,8 +454,9 @@
           return response.json();
       })
       .then(data => {
+          console.log(data)
           let missionsDailyIds = Array.from(missionsTips).map(missionTip => missionTip.id.replace('mission-', ''));
-
+          console.log(missionsDailyIds)
           try {
             for(item of missionsDailyIds) {
               document.querySelector(`#tip-answer-${item} input`).classList.remove('form-error')
