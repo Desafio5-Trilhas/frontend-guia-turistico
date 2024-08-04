@@ -455,10 +455,9 @@
       let answers = document.querySelectorAll('.mission-tip input')
       let useID = 2;
 
-      let cont = 5
       missionsTips.forEach((missionTip, index) => {
         answer = {
-          "id_missao": cont++,
+          "id_missao": parseInt(missionTip.id.replace('mission-',''), 10) ,
           "id_usuario": useID,
           "id_destino": travelId,
           "ultima_dica": missionTip.textContent,
@@ -466,30 +465,6 @@
         }
         missionDailyAnswers.push(answer)
       })
-      
-      // const questions = [
-      //   {
-      //       "id_missao": 5,
-      //       "id_usuario": 2,
-      //       "id_destino": 3,
-      //       "ultima_dica": "testando dica 1",
-      //       "resposta": "missão de teste 1"
-      //   },
-      //   {
-      //       "id_missao": 6,
-      //       "id_usuario": 2,
-      //       "id_destino": 3,
-      //       "ultima_dica": "testando dica 1",
-      //       "resposta": "missão de teste 2"
-      //   },
-      //   {
-      //     "id_missao": 7,
-      //     "id_usuario": 2,
-      //     "id_destino": 3,
-      //     "ultima_dica": "testando dica 1",
-      //     "resposta": "missão de teste 3"
-      //   }
-      // ];
 
       console.log(missionDailyAnswers)
 
@@ -511,7 +486,6 @@
           // console.log('Resposta da API:', data);
           // console.log(data.result.id)
           let missionsDailyIds = Array.from(missionsTips).map(missionTip => missionTip.id.replace('mission-', ''));
-          missionsDailyIds = [5,6,7]
 
           // console.log(missionsDailyIds)
           try {
