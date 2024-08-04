@@ -75,7 +75,7 @@
         height: 280px;
     }
     .section-card-details-info {
-        height: 450px;
+        height: 75%;
         
     }
     .search-div, .details-div {
@@ -165,7 +165,7 @@
         font-size: 24px;
         font-weight: bold;
     }
-    .title-images-details, .title-location-details {
+    .title-descricao-details, .title-images-details, .title-location-details {
         font-size: 20px;
         margin-left: 20px;
         font-weight: bold;
@@ -187,9 +187,13 @@
         flex-direction: column;
         gap: 10px;
     }
+    .descricao-container {
+        margin-left: 20px;
+        padding: 20px;
+    }
     .section-tour-details-body {
         overflow-y: scroll;
-        max-height: 350px;
+        max-height: 80%;
         scrollbar-color: #B9BBBE #f1f1f1;
     }
     .title-secondary {

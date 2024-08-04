@@ -122,6 +122,7 @@ function fetchInfoDetails(item) {
     fetchInfoBackend(destineID).then(data => {
         const itemCard = jsonData.filter(item => item.id_destino == destineID)[0];
         document.getElementById('idPointInfo').innerHTML = itemCard.titulo
+        document.getElementById('descricao-text').innerHTML = itemCard.descricao
 
         let imagesContainer = document.querySelector('.images-container')
 
