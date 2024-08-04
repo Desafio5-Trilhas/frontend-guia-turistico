@@ -24,7 +24,7 @@
         <li><a href="">Pagina inicial</a></li>
         <li><a id="openModalBtnLogin">Login</a></li>
         <li><a id="openModalBtnSignup">Cadastre-se</a></li>
-        <li style="display: none;"><a id="openModalBtnEditUser"></a></li>
+        <!-- <li style="display: none;"><a id="openModalBtnEditUser"></a></li> -->
         <li style="display: none;"><a id="openHistoricSection">Historico</a></li>
         <li style="display: none;"><a id="openMissionConcludedSection">Missões concluidas</a></li>
       </ul>
@@ -364,39 +364,8 @@
       <div class="modal-content-mission">
           <span id="closeModalMissionConcluded" class="close">&times;</span>
           <h2 class="modal-title">Missões Diarias</h2>
-         
           <div class="modal-form-imgs">
-            <div class="img-mission-icon">
-              <div>
-                <img src="../assets/images/image-points.png" width="100px" height="100px" alt="">
-              </div>            
-              <div class="title-mission-img">Dica 1</div>
-              <div class="data-mission-img"> 25, Fevereiro de 2018</div>
-            </div>
-            <div class="img-mission-icon">
-              <div>
-                <img src="../assets/images/image-points.png" width="100px" height="100px" alt="">
-              </div>            
-              <div class="title-mission-img">Dica 1</div>
-              <div class="data-mission-img"> 25, Fevereiro de 2018</div>
-            </div>
-            <div class="img-mission-icon">
-              <div>
-                <img src="../assets/images/image-points.png" width="100px" height="100px" alt="">
-              </div>            
-              <div class="title-mission-img">Dica 1</div>
-              <div class="data-mission-img"> 25, Fevereiro de 2018</div>
-            </div>
-            <div class="img-mission-icon">
-              <div>
-                <img src="../assets/images/image-points.png" width="100px" height="100px" alt="">
-              </div>            
-              <div class="title-mission-img">Dica 1</div>
-              <div class="data-mission-img"> 25, Fevereiro de 2018</div>
-            </div>
- 
           </div>
-
       </div>
     </div>
     
@@ -412,8 +381,8 @@
 <script src="./js/missionconcluded-functions.js"></script>
 <script>
   if(localStorage.getItem('authToken')){
-    document.querySelector('#openModalBtnEditUser').innerHTML = 'Perfil'
-    document.querySelector('#openModalBtnEditUser').parentNode.style.display = ''
+    // document.querySelector('#openModalBtnEditUser').innerHTML = 'Perfil'
+    // document.querySelector('#openModalBtnEditUser').parentNode.style.display = ''
     document.querySelector('#openHistoricSection').parentNode.style.display = ''
     document.querySelector('#openMissionConcludedSection').parentNode.style.display = ''
     

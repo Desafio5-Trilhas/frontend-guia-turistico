@@ -123,8 +123,8 @@ loginForm.addEventListener('submit', function(event) {
             localStorage.setItem('authToken', data['acess_token']);
             setTimeout(function(){ 
                 spanLogin.click()
-                document.querySelector('#openModalBtnEditUser').innerHTML = 'Perfil'
-                document.querySelector('#openModalBtnEditUser').parentNode.style.display = ''
+                // document.querySelector('#openModalBtnEditUser').innerHTML = 'Perfil'
+                // document.querySelector('#openModalBtnEditUser').parentNode.style.display = ''
                 document.querySelector('#openModalBtnLogin').parentNode.style.display = 'none'
                 document.querySelector('#openModalBtnSignup').parentNode.style.display = 'none'
                 document.querySelector('#openHistoricSection').parentNode.style.display = ''
