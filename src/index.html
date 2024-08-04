@@ -553,9 +553,15 @@
     })
 
     function searchDestineConsult() {
+      let url;
       let valueText = document.getElementById('searchDestineValue').value
       console.log(valueText)
-      const url = 'https://api-guia-turistico.vercel.app/api/destino/pesquisa/'+valueText;
+      if(valueText == '') {
+        url = 'https://api-guia-turistico.vercel.app/api/destino';
+      }else {
+        url = 'https://api-guia-turistico.vercel.app/api/destino/pesquisa?keyword='+valueText;
+      }
+
       const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
       const options = {
           method: 'GET', 
@@ -573,7 +579,25 @@
             return response.json();
         })
         .then(data => {
-          console.log("Return: ", data)
+          let html = "";
+          document.querySelector('.swiper-wrapper').innerHTML = ''
+          let carouselContainer = document.querySelector('.swiper-wrapper')
+ 
+          if(data.length > 0) {
+            data.forEach((item) => {
+                html += `<div class="swiper-slide" id="card-item-${item.id_destino}">
+                    <img src="${item.imagems[0].imagem}" width="150" height="180" alt="">
+                    <span class="text-overlay">${item.titulo}</span>
+                </div>`;
+            });
+            carouselContainer.innerHTML = html
+            
+            addClickEventToCardItem()
+
+          }else {
+            carouselContainer.innerHTML = `<h2> Nenhum ponto turistico com esse nome encontrado</h2>`
+          
+          }
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
