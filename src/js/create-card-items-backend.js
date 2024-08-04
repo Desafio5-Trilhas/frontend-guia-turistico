@@ -88,25 +88,21 @@ async function initMap(lat, long, type) {
   console.log(typeof lat, typeof long, typeof type);
 
   // Converte lat e long para float e formata para 6 casas decimais
-  const latitude = parseFloat(lat).toFixed(6);
-  const longitude = parseFloat(long).toFixed(6);
+  const latitude = Number(lat)
+  const longitude = Number(long)
 
-  // Converte latitude e longitude de volta para número
-  const latNum = parseFloat(latitude);
-  const longNum = parseFloat(longitude);
-
-  console.log(latNum, longNum, type);
+  console.log(latitude, longitude, type);
 
   // Inicializa o mapa
   var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
-      center: {lat: latNum, lng: longNum},
+      center: {lat: latitude, lng: longitude},
       zoom: 8
   });
 
   // Configura o serviço de pesquisa de lugares
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
-      location: {lat: latNum, lng: longNum},
+      location: {lat: latitude, lng: longitude},
       radius: 500,
       type: [type]
   }, function(results, status) {
