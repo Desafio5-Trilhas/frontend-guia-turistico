@@ -82,15 +82,15 @@ function fetchInfoBackend(destineID) {
         });
 }
 
-  async function initMap(latitude, longitude, type) {
+  async function initMap(lat, long, type) {
       // const latitude = -2.5307;
       // const longitude = -44.2989;
       // const type = 'Museu';
-      console.log(latitude, longitude, type)
-      console.log(typeof  latitude, typeof  longitude, typeof  type)
-      const latitude = parseFloat(latitude).toFixed(6)
-      const longitude = parseFloat(longitude).toFixed(6)
-      console.log(latitude, longitude, type)
+      console.log(lat, long, type)
+      console.log(typeof  lat, typeof  long, typeof  type)
+      const latitude = parseFloat(lat).toFixed(6)
+      const longitude = parseFloat(long).toFixed(6)
+      console.log(lat, long, type)
       
       var map = new google.maps.Map(document.querySelector('.image-google-maps'), {
           center: {lat: latitude, lng: longitude},
