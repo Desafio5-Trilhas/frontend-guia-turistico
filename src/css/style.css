@@ -113,6 +113,7 @@
         max-width: 150px;
         position: relative; /* Necessário para o posicionamento absoluto do texto */
         display: inline-block;
+        margin-right: 30px;
     }
     .next-and-past-buttons {
         display: flex;
@@ -232,7 +233,7 @@
         padding: 6px;
         border: 1px solid var(--blue-background-button);
         border-radius: 8px;
-        margin-left: 27%;
+        margin-left: 36.2%;
         color: var(--white);
         background-color: var(--blue-background-button);
     }

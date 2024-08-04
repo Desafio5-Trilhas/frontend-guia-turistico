@@ -1,4 +1,4 @@
-let jsonData = [];
+let jsonData;
 const apiKey = 'T69ve4cPJD4rK23mEpx40LXlwhDf7Y6grwpIL03yMtX2XgiuaZp1C6HkQvgsJUu1';
 const options = {
     method: 'GET', 
@@ -19,7 +19,6 @@ function fetchItemsIndexDefault() {
             return response.json();
         })
         .then(data => {
-            jsonData = data;
             return data; 
         })
         .catch(error => {
@@ -27,71 +26,162 @@ function fetchItemsIndexDefault() {
         });
 }
 
-function toBase64(arr) {
-    //arr = new Uint8Array(arr) if it's an ArrayBuffer
-    return btoa(
-       arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
-    );
- }
-
-function processImage(image) {
-    const blob = new Blob([image.data], { type: 'image/jpeg' });
-
-    // Cria um objeto URL a partir do Blob
-    const imageUrl = URL.createObjectURL(blob);
-    const img = new Image();
-    img.src = imageUrl;
-    console.log(imageUrl)
-    img.onload = function() {
-        // Cria um elemento canvas
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        // Desenha a imagem no canvas
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-
-        // Converte o canvas em uma data URL
-        const dataUrl = canvas.toDataURL('image/jpg');
-        
-        // Cria uma nova imagem com a data URL
-        const newImg = document.createElement('img');
-        newImg.src = dataUrl;
-        console.log(newImg);
-    };
-                   
-}
-
 function createCardItems() {
   let html = "";
 
   fetchItemsIndexDefault().then(data => {
-    console.log(data)
+    jsonData = data
     const items = Object.values(data);
-    console.log(items[0].imagems[2])
-    processImage(items[0].imagems[2].imagem)
-
-    return 
 
     // construct items carrousel
     let carouselContainer = document.querySelector('.swiper-wrapper')
-    items.forEach((item, index) => {
-        if(index != 3) {
-            html += `<div class="swiper-slide" id="card-item-${item.id_destino}">
-                <img src="${processImage(item.imagems[0].imagem)}" width="150" height="180" alt="">
-                <span class="text-overlay">${item.titulo}</span>
-            </div>`;
-        }
-        // html += `<div class="swiper-slide" id="card-item-${item.id_destino}">
-        //     <img src="${processImage(item.imagems[0].imagem)}" width="150" height="180" alt="">
-        //     <span class="text-overlay">${item.titulo}</span>
-        // </div>`;
+    items.forEach((item) => {
+        html += `<div class="swiper-slide" id="card-item-${item.id_destino}">
+            <img src="${item.imagems[0].imagem}" width="150" height="180" alt="">
+            <span class="text-overlay">${item.titulo}</span>
+        </div>`;
     });
     carouselContainer.innerHTML = html
 
+    addClickEventToCardItem()
+
+
   });
   
+}
+
+function fetchInfoBackend(destineID) {
+    const url = 'https://api-guia-turistico.vercel.app/api/destino/'+destineID
+  
+    return fetch(url, options) 
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data; 
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function fetchInfoDetails(item) {
+    let html = "";
+    let destineID = item.id.replace('card-item-', '')
+
+    fetchInfoBackend(destineID).then(data => {
+        const itemCard = jsonData.filter(item => item.id_destino == destineID)[0];
+        document.getElementById('idPointInfo').innerHTML = itemCard.titulo
+
+        let imagesContainer = document.querySelector('.images-container')
+
+        itemCard.imagems.forEach((item) => {
+        html += `<div class="img-slide-${item.id_imagem}">
+                <img src="${item.imagem}" width="300" height="150" alt="">
+                </div>`;
+        });
+        imagesContainer.innerHTML = html
+
+        let select = document.getElementById('id-points-of-interest')
+        let optionHtml = "";
+
+        data.rotas.forEach((item) => {
+            optionHtml += `<option value="${item.id_rota}" data-latitude="${item.latitude}" data-longitude="${item.longitude}">${item.nome}</option>`;
+        });
+        select.innerHTML = optionHtml
+
+        document.querySelector('.image-google-maps').innerHTML = `
+            <img src="../assets/images/image-maps01.png" width="auto" height="600" alt="">      
+        `
+
+        checkMissionDaily(data)
+
+    })
+    
+
+}
+
+function checkMissionDaily(itemData){
+    let htmlMission = "";
+    let missionContainer = document.querySelector('.mission-daily-container')
+    
+    if(!localStorage.getItem('authToken')) {
+      htmlMission = `
+        <span class="title-secondary" id="mission-daily-title">
+          Infelizmente essa opção so esta disponivel para os usuarios 
+          cadastrados no sistema.
+        </span>
+        <div>
+          <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
+        </div>
+      `
+      missionContainer.innerHTML = htmlMission;
+
+      return 
+    }
+
+    if(itemData.missaos) {
+
+      itemData.missaos.forEach((item) => {
+        htmlMission += `
+          <div class="mission-tip">
+            <span class="title-tip" id="mission-${item.id_missao}">${item.dica1}?</span>
+            <div id="tip-answer-${item.id_destino}" style="position: relative; width: 45%">
+              <input type="text" class="input-style-1">
+              <span class="error-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+                  <path fill="#dc3545" d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zm-248 50c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        `;
+      });
+      htmlMission += `
+        <button class="submitButtonTipStyle" onclick="submitMissionDaily(${itemData.missaos[0].id_destino});">
+          Salvar
+        </button>
+
+      `
+      missionContainer.innerHTML = htmlMission;
+
+      return 
+    }else {
+      htmlMission = `
+        <span class="title-secondary" id="mission-daily-title">
+          Você ja concluiu todas as missões de hoje.
+        </span>
+        <div>
+          <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
+        </div>
+      `
+      missionContainer.innerHTML = htmlMission;
+
+      return 
+
+    }
+
+}
+
+function addClickEventToCardItem() {
+    var carouselItems = document.querySelectorAll('.swiper-slide');
+    var carousel = document.getElementById('carousel');
+    
+    carouselItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+          fetchInfoDetails(item)
+
+          setTimeout(function() {
+            carousel.style.display = 'none';
+            var tourDetails = document.getElementById('tour-details');
+            tourDetails.style.display = '';
+            tourDetails.classList.toggle('raised');
+          }, 400); 
+
+        });
+    });
 }
 
 createCardItems()

@@ -404,17 +404,13 @@
     © copyright 2024 Todos os direitos reservados | desenvolvido por <span class="names-dev">Marcos Vinicius, Gabriel Silva e Bruno Coelho</span>
   </footer>
 
-<!--Boostrap 5-->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-<script src="./js/create-card-items.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.6.2/swiper-bundle.min.js"></script>
+<script src="./js/create-card-items-backend.js"></script>
 <script src="./js/login-and-signup-user.js"></script>
 <script src="./js/historic-functions.js"></script>
 <script src="./js/missionconcluded-functions.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.6.2/swiper-bundle.min.js"></script>
 <script>
-
-  const token = localStorage.getItem('authToken');
-  if(token){
+  if(localStorage.getItem('authToken')){
     document.querySelector('#openModalBtnEditUser').innerHTML = 'Perfil'
     document.querySelector('#openModalBtnEditUser').parentNode.style.display = ''
     document.querySelector('#openHistoricSection').parentNode.style.display = ''
@@ -425,9 +421,9 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 3, // Número de slides visíveis ao mesmo tempo
-        spaceBetween: 25, // Espaçamento entre os slides
         // loop: true, // Ativar loop infinito
         pagination: {
             el: '.swiper-pagination',
@@ -446,123 +442,8 @@
         //     disableOnInteraction: false, // Não desativar autoplay na interação do usuário
         // },
     });
-  });
-    var carouselItems = document.querySelectorAll('.swiper-slide');
-    var carousel = document.getElementById('carousel');
-    
-    carouselItems.forEach(function(item) {
-        item.addEventListener('click', function() {
-            carousel.style.display = 'none';
-            var tourDetails = document.getElementById('tour-details');
-            tourDetails.style.display = '';
-            
-            setTimeout(function() {
-                tourDetails.classList.toggle('raised');
-            }, 10); 
-            // console.log(item)
-            fetchInfoDetails(item)
-        });
+   
     });
-
-    function fetchInfoDetails(item) {
-      let html = "";
-
-      const items = Object.values(jsonData);
-      const itemCard = items[item.id.replace('card-item-', '')]
-
-      document.getElementById('idPointInfo').innerHTML = itemCard.cardItemName
-
-      let imagesContainer = document.querySelector('.images-container')
-
-      itemCard.cardImagesSecundary.forEach((item,  index) => {
-        html += `<div class="img-slide-${index}">
-                <img src="${item}" width="300" height="150" alt="">
-              </div>`;
-      });
-      imagesContainer.innerHTML = html
-
-      let select = document.getElementById('id-points-of-interest')
-      let optionHtml = "";
-
-      itemCard.cardItemPointsOptions.forEach((item, index) => {
-        optionHtml += `<option>${item}</option>`;
-      });
-      select.innerHTML = optionHtml
-
-      document.querySelector('.image-google-maps').innerHTML = `
-        <img src="${itemCard.cardItemImageGoogleMapsSrc}" width="auto" height="600" alt="">      
-      `
-
-      checkMissionDaily(itemCard.existMissionDaily, itemCard)
-
-    }
-
-    function checkMissionDaily(existMissionDaily, itemCard){
-      let htmlMission = "";
-
-      const token = localStorage.getItem('authToken');
-
-      let missionContainer = document.querySelector('.mission-daily-container')
-      
-      // if(!token) {
-      //   htmlMission = `
-      //     <span class="title-secondary" id="mission-daily-title">
-      //       Infelizmente essa opção so esta disponivel para os usuarios 
-      //       cadastrados no sistema.
-      //     </span>
-      //     <div>
-      //       <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
-      //     </div>
-      //   `
-      //   missionContainer.innerHTML = htmlMission;
-
-      //   return 
-      // }
-
-      if(existMissionDaily == true) {
-        let select = document.getElementById('id-points-of-interest')
-        let optionHtml = "";
-        let cont = 5;
-        itemCard.missionsDailyTips.forEach((item, index) => {
-          htmlMission += `
-            <div class="mission-tip">
-              <span class="title-tip" id="mission-${index}">${item}?</span>
-              <div id="tip-answer-${cont++}" style="position: relative; width: 45%">
-                <input type="text" class="input-style-1">
-                <span class="error-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
-                    <path fill="#dc3545" d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zm-248 50c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z"/>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          `;
-        });
-        htmlMission += `
-          <button class="submitButtonTipStyle" onclick="submitMissionDaily(${3});">
-            Salvar
-          </button>
-
-        `
-        missionContainer.innerHTML = htmlMission;
-
-        return 
-      }else {
-        htmlMission = `
-          <span class="title-secondary" id="mission-daily-title">
-            Você ja concluiu todas as missões de hoje.
-          </span>
-          <div>
-            <img src="../assets/images/image-default-mission01.png" width="150" height="150"alt="">
-          </div>
-        `
-        missionContainer.innerHTML = htmlMission;
-
-        return 
-
-      }
-
-    }
 
     function submitMissionDaily(travelId) {
       let missionDailyAnswers = [];
