@@ -415,7 +415,7 @@
     }
 
     .title-historic {
-        color: var(--black);
+        color: var(--white);
         font-weight: bold;
         padding: 15px;
     }
@@ -437,7 +437,7 @@
     
     /* Estilo para a linha de cabeçalho */
     table thead tr {
-        background-color: #009879;
+        background-color: var(--blue-background-button);
         color: #ffffff;
         text-align: left;
         font-weight: bold;
@@ -484,6 +484,7 @@
 
     .table-container {
         flex-grow: 1;
+        width: 90%;
         max-height: 199px;
         overflow-x: auto;
         padding-right: 10px;
@@ -492,7 +493,7 @@
 
     button#searchHistoric {
         cursor: pointer;
-        padding: 9px;
+        padding: 11px;
         margin-left: 10px;
         border: 1px solid var(--blue-background-button);
         border-radius: 8px;
@@ -502,7 +503,7 @@
     .modal-historic-search {
         display: flex;
         align-items: center;
-        width: 98%;
+        width: 90%;
     }
     .modal-content-historic {
         background-color: var(--background-modal-color);

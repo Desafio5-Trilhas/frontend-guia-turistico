@@ -44,11 +44,25 @@ function createCardItems() {
     carouselContainer.innerHTML = html
 
     addClickEventToCardItem()
+    
 
 
   });
   
 }
+function closeInfoDetails(el) {
+  var tourDetails = document.getElementById('tour-details');
+  
+  tourDetails.classList.remove('raised');
+  tourDetails.classList.add('closing');
+  
+  setTimeout(function() {
+      tourDetails.style.display = 'none';
+      tourDetails.classList.remove('closing');
+      carousel.style.display = '';
+  }, 500); 
+}
+
 
 function fetchInfoBackend(destineID) {
     const url = 'https://api-guia-turistico.vercel.app/api/destino/'+destineID
@@ -172,6 +186,10 @@ function addClickEventToCardItem() {
     carouselItems.forEach(function(item) {
         item.addEventListener('click', function() {
           fetchInfoDetails(item)
+          //se logado salvar historico
+          if(localStorage.getItem('authToken')) {
+            createHistoricBackend(item)
+          }
 
           setTimeout(function() {
             carousel.style.display = 'none';
